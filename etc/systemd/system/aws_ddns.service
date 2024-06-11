@@ -1,0 +1,7 @@
+# Migrate MY_PATH
+
+[Unit]
+Description=Check IP change. If IP is changed, reflect on aws and notify to Discord or etc.
+
+[Service]
+ExecStart=/etc/MY_PATH/start.sh
