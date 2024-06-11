@@ -12,8 +12,7 @@
 
 1. AWS
 
-- 적어도 하나의 AWS Route53 호스팅영역이 필요합니다.
-- root domain이 A레코드인 경우에만 이 프로젝트는 작동합니다.
+- 적어도 하나의 AWS Route53 호스팅 영역과 호스팅 영역의 A레코드 필드가 필요합니다.
 - 아래의 권한을 가지고 있는 사용자의 퍼블릭키, 시크릿키가 필요합니다.
   (참조: https://docs.aws.amazon.com/ko_kr/Route53/latest/DeveloperGuide/specifying-rrset-conditions.html)
 
@@ -57,8 +56,8 @@
 
 1. discord webhook
 
-- 만약 비활성화를 원한다면 config.py의 USE_DISCORD 필드를 False로 변경하세요
-- discord 알람을 활성화하려면 discord webhook url을 발급해야합니다.
+- 만약 비활성화를 원한다면 config.py의 USE_DISCORD를 False로 변경하세요
+- discord 알람을 활성화하려면 discord webhook url을 발급하고 USE_DISCORD를 TRUE로 변경하세요.
   (참조: https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks)
 
 2. file migration
