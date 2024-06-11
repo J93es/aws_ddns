@@ -49,7 +49,7 @@
 2. local
 
 - 80, 443 포트가 열려있어야 합니다.
-- python3.9 이상과 boto3, requests가 필요합니다.
+- python3.9 이상과 boto3가 필요합니다.
   ```bash
   foo@bar:~$ pip install {name}
   foo@bar:~$ apt-get python3-{name}
