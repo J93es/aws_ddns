@@ -8,7 +8,7 @@ aws_ddns_config = {
     "hostedZones": { 
         
         "example1.com" : {
-            "record" : {
+            "records" : {
                 "example1.com" : {
                     "TTL": 300
                 },
@@ -20,7 +20,7 @@ aws_ddns_config = {
         },
         
         "example2.net" : {
-            "record" : {
+            "records" : {
                 "example2.net" : {
                     "TTL": 300
                 },

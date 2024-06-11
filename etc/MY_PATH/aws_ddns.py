@@ -21,7 +21,7 @@ try:
         if "Comment" in conf_hosted_zones[conf_hosted_zone_name]:
             conf_hosted_zones[conf_hosted_zone_name]["Comment"] = str(conf_hosted_zones[conf_hosted_zone_name]["Comment"])
             
-        conf_records = conf_hosted_zones[conf_hosted_zone_name]["record"]
+        conf_records = conf_hosted_zones[conf_hosted_zone_name]["records"]
         for conf_record_name in conf_records:
             if "TTL" in conf_records[conf_record_name]:
                 conf_records[conf_record_name]["TTL"] = \
@@ -96,6 +96,10 @@ def filter_hosted_zones(hosted_zones: list, conf_hosted_zones: dict) -> list:
             continue
         
         if "Comment" not in conf_hosted_zones[hosted_zone_name]:
+            filtered_hosted_zones.append(each_hosted_zone)
+            continue
+        
+        if conf_hosted_zones[hosted_zone_name]["Comment"].strip() == "":
             filtered_hosted_zones.append(each_hosted_zone)
             continue
         
@@ -207,7 +211,7 @@ for each_hosted_zone in hosted_zones:
             logging(f'Failed to get resource record sets from hosted zone: {hosted_zone_name} \nerror: {e}', "get_records()")
             continue
         
-        conf_records: dict = conf_hosted_zones[hosted_zone_name]['record']
+        conf_records: dict = conf_hosted_zones[hosted_zone_name]['records']
         records = filter_records(records=records, conf_records=conf_records)
         
         change_batch = make_change_batch(records=records, conf_records=conf_records, cur_ip=cur_ip)
@@ -215,7 +219,7 @@ for each_hosted_zone in hosted_zones:
         try:
             is_updated = upsert_records(client=client, hosted_zone_id=hosted_zone_id, change_batch=change_batch)
             if is_updated:
-                logging(f'Successfully updated hosted zone: {hosted_zone_name}\n ip => {cur_ip}\n TTL => {conf_records[hosted_zone_name]["TTL"]}')
+                logging(f'Successfully updated hosted zone: {hosted_zone_name}`s A record Value is {cur_ip}\n')
             elif not QUIET_MODE:
                 logging(f'Nothing changed: {hosted_zone_name}')
         except Exception as e:

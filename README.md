@@ -67,4 +67,4 @@
 - PATH 수정을 필요로하는 타겟은 aws_ddns.service, start.sh, MY_PATH(디렉토리 명)이 존재합니다.
 - aws_ddns.service, start.sh, MY_PATH(디렉토리 명)의 MY_PATH를 적절히 migration하세요.
 - MY_PATH 디렉토리는 /etc/ 디렉토리에 위치할 필요는 없습니다. 적절한 위치를 선정하세요.
-- aws_ddns.service, aws_ddns.timer는 /etc/systemd/system 디렉토리에 위치하는 것을 권장합니다.
+- aws_ddns.service, aws_ddns.timer는 /etc/systemd/system 디렉토리에 위치시키는 것을 권장합니다.
