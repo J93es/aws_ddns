@@ -3,7 +3,6 @@ aws_ddns_config = {
     "DISCORD_WEB_HOOK_URI" : "CUSTOM_WEB_HOOK_URI",
     "AWS_ACCESS_KEY_ID" : "CLIENT_PUBLIC_KEY",
     "AWS_SECRET_ACCESS_KEY" : "CLIENT_SECRET_KEY",
-    "QUIET_MODE": False,
     
     "hostedZones": { 
         
