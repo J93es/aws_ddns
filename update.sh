@@ -1,4 +1,5 @@
 #!/bin/bash
+#dldld
 
 mkdir aws_ddns_$(date +%Y%m%d%H%M%S).bak &&
 mv aws_ddns_main.py src update.sh aws_ddns_$(date +%Y%m%d%H%M%S).bak &&
