@@ -2,4 +2,4 @@
 
 PATH="MY_PATH"
 
-python3 /etc/${PATH}/aws_ddns.py
+python3 /etc/${PATH}/aws_ddns_main.py

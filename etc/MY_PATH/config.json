@@ -1,0 +1,38 @@
+{
+  "USE_DISCORD": "True",
+  "DISCORD_WEB_HOOK_URI": "CUSTOM",
+  "AWS_ACCESS_KEY_ID": "CUSTOM",
+  "AWS_SECRET_ACCESS_KEY": "CUSTOM",
+  "HostedZones": [
+    {
+      "Name": "example.com",
+      "Comment": "",
+
+      "Records": [
+        {
+          "Name": "example.com",
+          "TTL": 300
+        },
+        {
+          "Name": "www.example.com",
+          "TTL": 300
+        }
+      ]
+    },
+    {
+      "Name": "example.net",
+      "Comment": "",
+
+      "Records": [
+        {
+          "Name": "example.net",
+          "TTL": 300
+        },
+        {
+          "Name": "www.example.net",
+          "TTL": 300
+        }
+      ]
+    }
+  ]
+}
