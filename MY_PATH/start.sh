@@ -1,3 +1,5 @@
 #!/bin/bash
 
-python3 ./aws_ddns_main.py
+MY_PATH="aws_ddns.d"
+
+python3 /etc/${MY_PATH}/aws_ddns_main.py
