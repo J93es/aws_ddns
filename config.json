@@ -1,8 +1,8 @@
 {
   "USE_DISCORD": true,
   "DISCORD_WEB_HOOK_URI": "CUSTOM",
-  "AWS_ACCESS_KEY_ID": "CUSTOM",
-  "AWS_SECRET_ACCESS_KEY": "CUSTOM",
+  "ROUTE53_DDNS_ACCESS_KEY_ID": "CUSTOM",
+  "ROUTE53_DDNS_SECRET_ACCESS_KEY": "CUSTOM",
   "HostedZones": [
     {
       "Name": "example.com",

@@ -1,12 +1,12 @@
 import boto3
-from aws_ddns_config import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+from route53_ddns_config import ROUTE53_DDNS_ACCESS_KEY_ID, ROUTE53_DDNS_SECRET_ACCESS_KEY
 
 class Boto3Controller:
     client: boto3.client
     
     def __init__(self):
         try:
-            self.client = boto3.client = boto3.client('route53', aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+            self.client = boto3.client = boto3.client('route53', aws_access_key_id=ROUTE53_DDNS_ACCESS_KEY_ID, aws_secret_access_key=ROUTE53_DDNS_SECRET_ACCESS_KEY)
         except Exception as e:
             raise Exception(f'[boto3.client] Failed to create client: {e}')
         

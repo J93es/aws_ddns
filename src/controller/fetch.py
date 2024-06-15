@@ -1,6 +1,6 @@
 import urllib.request
 import urllib.parse
-from aws_ddns_config import USE_DISCORD, DISCORD_WEB_HOOK_URI
+from route53_ddns_config import USE_DISCORD, DISCORD_WEB_HOOK_URI
     
     
 def to_discord(content: str) -> None:

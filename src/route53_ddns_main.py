@@ -1,11 +1,11 @@
-from aws_ddns_config import CONFIG_HOSTED_ZONES
-from adapter.aws import AWS_Hosted_Zones
+from route53_ddns_config import CONFIG_HOSTED_ZONES
+from adapter.route53 import Route53_Hosted_Zones
 from adapter.target import Target_Hosted_Zones
 from service.logger import logger
 from service.updater import Updater
 from controller.fetch import get_current_ip
 
-def aws_ddns():
+def route53_ddns():
     try: 
         current_ip = get_current_ip()
     except Exception as e:
@@ -21,14 +21,14 @@ def aws_ddns():
 
 
     try:  
-        aws_hosted_zones = AWS_Hosted_Zones(target_hosted_zones)
+        route53_hosted_zones = Route53_Hosted_Zones(target_hosted_zones)
     except Exception as e:
         logger(f'Failed to get hosted zones: {e}')
         exit(1)
         
         
     try:
-        updater = Updater(aws_hosted_zones, target_hosted_zones, current_ip)
+        updater = Updater(route53_hosted_zones, target_hosted_zones, current_ip)
         updater.update_hosted_zone()
     except Exception as e:
         logger(f'Failed to update hosted zones: {e}')
@@ -44,4 +44,4 @@ def aws_ddns():
         exit(1)
 
 
-aws_ddns()
+route53_ddns()

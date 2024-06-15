@@ -4,31 +4,31 @@ from controller.boto3_controller import boto3_controller
 class Updater:
     current_ip: str
     changed_info: list
-    aws_hosted_zones: dict
+    route53_hosted_zones: dict
     target_hosted_zones: dict
     
-    def __init__(self, aws_hosted_zones: dict, target_hosted_zones: dict, current_ip: str) -> None:
+    def __init__(self, route53_hosted_zones: dict, target_hosted_zones: dict, current_ip: str) -> None:
         self.changed_info = []
-        self.aws_hosted_zones = aws_hosted_zones
+        self.route53_hosted_zones = route53_hosted_zones
         self.target_hosted_zones = target_hosted_zones
         self.current_ip = current_ip
         
     def get_changed_info(self) -> list:
         return copy.deepcopy(self.changed_info)
       
-    def make_change_batch(self, aws_records: dict, target_records: dict) -> dict:
+    def make_change_batch(self, route53_records: dict, target_records: dict) -> dict:
         change_batch = []
         changed_records = []
             
-        for aws_record in aws_records:
-            record_distinction = aws_record.get_distinction()
+        for route53_record in route53_records:
+            record_distinction = route53_record.get_distinction()
             target_record = target_records.find_by_distinction(record_distinction)
             
             previous_ip_list = []
-            aws_resource = aws_record.resource
-            for elem in aws_resource:
+            route53_resource = route53_record.resource
+            for elem in route53_resource:
                 previous_ip_list.append(elem['Value']) 
-            previous_ttl = aws_record.ttl
+            previous_ttl = route53_record.ttl
             
             current_ttl = target_record.ttl
                 
@@ -55,21 +55,21 @@ class Updater:
 
     def update_hosted_zone(self) -> list:
         changed_info = []
-        for aws_hosted_zone in self.aws_hosted_zones:
-            hosted_zone_distinction = aws_hosted_zone.get_distinction()
+        for route53_hosted_zone in self.route53_hosted_zones:
+            hosted_zone_distinction = route53_hosted_zone.get_distinction()
             target_hosted_zone = self.target_hosted_zones.find_by_distinction(hosted_zone_distinction)
             
-            aws_records = aws_hosted_zone.get_records()
+            route53_records = route53_hosted_zone.get_records()
             target_records = target_hosted_zone.get_records()
-            change_batch, changed_records = self.make_change_batch(aws_records, target_records)  
+            change_batch, changed_records = self.make_change_batch(route53_records, target_records)  
                     
             try:
                 if len(change_batch) == 0:
                     continue
-                boto3_controller.upsert_records(aws_hosted_zone.id, change_batch)
-                changed_info.append({"Name": aws_hosted_zone.name, "Status" : "SUCCESS","Records": changed_records})
+                boto3_controller.upsert_records(route53_hosted_zone.id, change_batch)
+                changed_info.append({"Name": route53_hosted_zone.name, "Status" : "SUCCESS","Records": changed_records})
             except Exception as e:
-                changed_info.append({"Name": aws_hosted_zone.name, "Status": "Failed", "Records": f'[{changed_records}] {e}'})
+                changed_info.append({"Name": route53_hosted_zone.name, "Status": "Failed", "Records": f'[{changed_records}] {e}'})
                 continue
                 
                 

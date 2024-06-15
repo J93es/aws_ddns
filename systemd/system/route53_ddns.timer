@@ -1,5 +1,5 @@
 [Unit]
-Description=Run aws_ddns.service every 30 minutes
+Description=Run route53_ddns.service every 30 minutes
 
 [Timer]
 OnBootSec=5min

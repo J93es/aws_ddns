@@ -1,70 +1,70 @@
-from model.hosted_zone import Hosted_Zones, Each_Hosted_Zone_Distinction
-from model.record import Records, Each_Record_Distinction
+from schema.hosted_zone import Hosted_Zones, Each_Hosted_Zone_Distinction
+from schema.record import Records, Each_Record_Distinction
 from controller.boto3_controller import boto3_controller
 
-class AWS_Hosted_Zones(Hosted_Zones):
+class Route53_Hosted_Zones(Hosted_Zones):
     hosted_zones: list
     
     
     def __init__(self, target_hosted_zone: Hosted_Zones) -> None:
-        aws_hosted_zones = self.__init_hosted_zones(target_hosted_zone)
-        self.hosted_zones = Hosted_Zones(aws_hosted_zones)
+        route53_hosted_zones = self.__init_hosted_zones(target_hosted_zone)
+        self.hosted_zones = Hosted_Zones(route53_hosted_zones)
             
             
     def __init_hosted_zones(self, target_hosted_zone: Hosted_Zones) -> list:
         hosted_zones = []
-        aws_hosted_zones = boto3_controller.get_hosted_zones()
+        route53_hosted_zones = boto3_controller.get_hosted_zones()
         target_hosted_zone_distinctions = target_hosted_zone.get_distinctions()
 
-        for aws_hosted_zone in aws_hosted_zones:
-            aws_hosted_zone['Name'] = aws_hosted_zone['Name'][:-1]
-            aws_hosted_zone['Comment'] = aws_hosted_zone['Config'].pop('Comment')
+        for route53_hosted_zone in route53_hosted_zones:
+            route53_hosted_zone['Name'] = route53_hosted_zone['Name'][:-1]
+            route53_hosted_zone['Comment'] = route53_hosted_zone['Config'].pop('Comment')
             
-            aws_hosted_zone_distinction = Each_Hosted_Zone_Distinction(aws_hosted_zone['Name'], aws_hosted_zone['Comment'])
-            if target_hosted_zone_distinctions != None and aws_hosted_zone_distinction not in target_hosted_zone_distinctions:
+            route53_hosted_zone_distinction = Each_Hosted_Zone_Distinction(route53_hosted_zone['Name'], route53_hosted_zone['Comment'])
+            if target_hosted_zone_distinctions != None and route53_hosted_zone_distinction not in target_hosted_zone_distinctions:
                 continue
             
-            target_records: Records = target_hosted_zone.find_by_distinction(aws_hosted_zone_distinction).get_records()
-            aws_hosted_zone['Records'] = self.__init_records(aws_hosted_zone['Id'], target_records)
+            target_records: Records = target_hosted_zone.find_by_distinction(route53_hosted_zone_distinction).get_records()
+            route53_hosted_zone['Records'] = self.__init_records(route53_hosted_zone['Id'], target_records)
             
-            hosted_zones.append(aws_hosted_zone)
+            hosted_zones.append(route53_hosted_zone)
         return hosted_zones
     
     
     def __init_records(self, hosted_zone_id: str, target_records: Records) -> list:
         records = []
-        aws_records = boto3_controller.get_records(hosted_zone_id)
+        route53_records = boto3_controller.get_records(hosted_zone_id)
         target_records_distinctions = target_records.get_distinctions()
         
-        for aws_record in aws_records:
-            aws_record['Name'] = aws_record['Name'][:-1]
-            if aws_record['Type'] != 'A':
+        for route53_record in route53_records:
+            route53_record['Name'] = route53_record['Name'][:-1]
+            if route53_record['Type'] != 'A':
                 continue
             
-            aws_record_distinction = Each_Record_Distinction(aws_record['Name'])
-            if aws_record_distinction not in target_records_distinctions:
+            route53_record_distinction = Each_Record_Distinction(route53_record['Name'])
+            if route53_record_distinction not in target_records_distinctions:
                 continue
             
-            aws_record['Resource'] = aws_record.pop('ResourceRecords')
-            records.append(aws_record)
+            route53_record['Resource'] = route53_record.pop('ResourceRecords')
+            records.append(route53_record)
         return records
 
 
 
-# from config import aws_ddns_config
+# from config import route53_ddns_config
 # from repository.target import Target_Hosted_Zones
 
-# print(aws_ddns_config["HostedZones"])
-# target_hosted_zones = Target_Hosted_Zones(aws_ddns_config["HostedZones"])
+# print(route53_ddns_config["HostedZones"])
+# target_hosted_zones = Target_Hosted_Zones(route53_ddns_config["HostedZones"])
 
-# AWS_ACCESS_KEY_ID = str(aws_ddns_config["AWS_ACCESS_KEY_ID"])
-# AWS_SECRET_ACCESS_KEY = str(aws_ddns_config["AWS_SECRET_ACCESS_KEY"])
+# route53_ACCESS_KEY_ID = str(route53_ddns_config["route53_ACCESS_KEY_ID"])
+# route53_SECRET_ACCESS_KEY = str(route53_ddns_config["route53_SECRET_ACCESS_KEY"])
 
-# aws_hosted_zones = AWS_Hosted_Zones(target_hosted_zones)
+# route53_hosted_zones = route53_Hosted_Zones(target_hosted_zones)
 # print(target_hosted_zones.to_list())
-# print(aws_hosted_zones.to_list())
+# print(route53_hosted_zones.to_list())
         
-# https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/route53/client/list_resource_record_sets.html    
+# https://boto3.amazonroute53.com/v1/documentation/api/latest/reference/services/route53/client/list_resource_record_sets.html    
 # list_resource_record_sets__response
 # {
 #     'ResourceRecordSets': [
@@ -99,7 +99,7 @@ class AWS_Hosted_Zones(Hosted_Zones):
 #                 'LocationName': 'string'
 #             },
 #             'GeoProximityLocation': {
-#                 'AWSRegion': 'string',
+#                 'route53Region': 'string',
 #                 'LocalZoneGroup': 'string',
 #                 'Coordinates': {
 #                     'Latitude': 'string',

@@ -1,4 +1,4 @@
-from model.hosted_zone import Hosted_Zones
+from schema.hosted_zone import Hosted_Zones
       
 class Target_Hosted_Zones(Hosted_Zones):
     hosted_zones: list
@@ -24,19 +24,5 @@ class Target_Hosted_Zones(Hosted_Zones):
             config_record['Resource'] = []
             records.append(config_record)
         return records
-       
-
-# from config import aws_ddns_config
-
-# target_hosted_zones = Target_Hosted_Zones(aws_ddns_config["HostedZones"])
-
-# h_ids = b.get_distinctions()
-# hosted_zone = b.find_by_distinction(h_ids[0])
-# print(h_ids)
-# print(hosted_zone)
-
-# ids = hosted_zone.get_records().get_distinctions()
-# print(ids)
-# print(hosted_zone.get_records().find_by_distinction(ids[0])) 
 
 #config.py

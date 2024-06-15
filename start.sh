@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python3 $AWS_DDNS_PATH/src/aws_ddns_main.py
+python3 $ROUTE53_DDNS_PATH/src/route53_ddns_main.py
