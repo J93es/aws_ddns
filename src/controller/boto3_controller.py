@@ -1,9 +1,5 @@
 import boto3
-
-from aws_ddns_main import aws_ddns_config
-
-AWS_ACCESS_KEY_ID = str(aws_ddns_config["AWS_ACCESS_KEY_ID"])
-AWS_SECRET_ACCESS_KEY = str(aws_ddns_config["AWS_SECRET_ACCESS_KEY"])
+from aws_ddns_config import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 
 class Boto3Controller:
     client: boto3.client

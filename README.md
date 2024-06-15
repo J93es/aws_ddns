@@ -67,9 +67,8 @@ foo@bar:~$ pip install boto3
 
 1. **경로 마이그레이션**:
 
-   - `aws_ddns.service`, `start.sh`, 및 `MY_PATH` (디렉토리 명)의 경로를 적절히 수정.
+   - `aws_ddns.service`의 경로를 적절히 수정(절대경로).
    - `aws_ddns.service`, `aws_ddns.timer`는 `/etc/systemd/system`에 위치시키는 것을 권장.
-   - `MY_PATH` 디렉토리는 `/etc/`에 위치할 필요는 없으며, 적절한 위치를 선정.
 
 2. **config.py 마이그레이션**
 
@@ -87,7 +86,7 @@ foo@bar:~$ pip install boto3
 
 2. `config.py` 설정
 
-   - AWS 자격 증명 및 Discord Webhook URL 설정.
+   - AWS 자격 증명, Discord Webhook URL 설정, DDNS를 적용할 hosted zone, A record 지정.
 
 3. Systemd 서비스 및 타이머 설치
 

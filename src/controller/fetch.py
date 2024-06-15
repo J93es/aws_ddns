@@ -1,12 +1,6 @@
 import urllib.request
 import urllib.parse
-from aws_ddns_main import aws_ddns_config
-
-
-USE_DISCORD = bool(aws_ddns_config["USE_DISCORD"])
-DISCORD_WEB_HOOK_URI = ""
-if USE_DISCORD:
-    DISCORD_WEB_HOOK_URI = str(aws_ddns_config["DISCORD_WEB_HOOK_URI"])
+from aws_ddns_config import USE_DISCORD, DISCORD_WEB_HOOK_URI
     
     
 def to_discord(content: str) -> None:
