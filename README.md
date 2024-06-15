@@ -67,8 +67,7 @@ foo@bar:~$ pip install boto3
 
 1. **경로 마이그레이션**:
 
-   - `aws_ddns.service`의 경로를 적절히 수정(절대경로).
-   - `aws_ddns.service`, `aws_ddns.timer`는 `/etc/systemd/system`에 위치시키는 것을 권장.
+   - `route53_ddns.service`의 <CUSTOM_PATH>를 수정(절대경로).
 
 2. **config.py 마이그레이션**
 
@@ -91,11 +90,11 @@ foo@bar:~$ pip install boto3
 3. Systemd 서비스 및 타이머 설치
 
    ```bash
-   sudo cp aws_ddns.service /etc/systemd/system/
-   sudo cp aws_ddns.timer /etc/systemd/system/
+   sudo cp route53_ddns.service /etc/systemd/system/
+   sudo cp route53_ddns.timer /etc/systemd/system/
    sudo systemctl daemon-reload
-   sudo systemctl enable aws_ddns.timer
-   sudo systemctl start aws_ddns.timer
+   sudo systemctl enable route53_ddns.timer
+   sudo systemctl start route53_ddns.timer
    ```
 
 ### 주의 사항
