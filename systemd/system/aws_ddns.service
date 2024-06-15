@@ -1,8 +1,8 @@
-# Migrate MY_PATH
+# Migrate CUSTOM_PATH
 
 [Unit]
 Description=Check IP change. If IP is changed, reflect on aws and notify to Discord or etc.
 
 [Service]
-Environment="AWS_DDNS_PATH=[[[MY_PATH]]]"
-ExecStart=$AWS_DDNS_PATH/start.sh
+Environment="AWS_DDNS_PATH=<CUSTOM_PATH>"
+ExecStart="<CUSTOM_PATH>/start.sh"
