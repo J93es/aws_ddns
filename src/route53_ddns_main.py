@@ -1,6 +1,6 @@
 from route53_ddns_config import CONFIG_HOSTED_ZONES
-from adapter.route53 import Route53_Hosted_Zones
-from adapter.target import Target_Hosted_Zones
+from adaptor.route53 import Route53HostedZones
+from adaptor.target import TargetHostedZones
 from service.logger import logger
 from service.updater import Updater
 from controller.fetch import get_current_ip
@@ -14,14 +14,14 @@ def route53_ddns():
         
         
     try:
-        target_hosted_zones = Target_Hosted_Zones(CONFIG_HOSTED_ZONES)
+        target_hosted_zones = TargetHostedZones(CONFIG_HOSTED_ZONES)
     except Exception as e:
         logger(f'Failed to get config: {e} \nPlease check the config.json')
         exit(1)
 
 
     try:  
-        route53_hosted_zones = Route53_Hosted_Zones(target_hosted_zones)
+        route53_hosted_zones = Route53HostedZones(target_hosted_zones)
     except Exception as e:
         logger(f'Failed to get hosted zones: {e}')
         exit(1)

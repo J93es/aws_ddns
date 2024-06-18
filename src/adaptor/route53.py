@@ -1,17 +1,17 @@
-from schema.hosted_zone import Hosted_Zones, Each_Hosted_Zone_Distinction
-from schema.record import Records, Each_Record_Distinction
+from schema.hosted_zone import HostedZones, EachHostedZoneDistinction
+from schema.record import Records, EachRecordDistinction
 from controller.boto3_controller import boto3_controller
 
-class Route53_Hosted_Zones(Hosted_Zones):
+class Route53HostedZones(HostedZones):
     hosted_zones: list
     
     
-    def __init__(self, target_hosted_zone: Hosted_Zones) -> None:
+    def __init__(self, target_hosted_zone: HostedZones) -> None:
         route53_hosted_zones = self.__init_hosted_zones(target_hosted_zone)
-        self.hosted_zones = Hosted_Zones(route53_hosted_zones)
+        self.hosted_zones = HostedZones(route53_hosted_zones)
             
             
-    def __init_hosted_zones(self, target_hosted_zone: Hosted_Zones) -> list:
+    def __init_hosted_zones(self, target_hosted_zone: HostedZones) -> list:
         hosted_zones = []
         route53_hosted_zones = boto3_controller.get_hosted_zones()
         target_hosted_zone_distinctions = target_hosted_zone.get_distinctions()
@@ -20,7 +20,7 @@ class Route53_Hosted_Zones(Hosted_Zones):
             route53_hosted_zone['Name'] = route53_hosted_zone['Name'][:-1]
             route53_hosted_zone['Comment'] = route53_hosted_zone['Config'].pop('Comment')
             
-            route53_hosted_zone_distinction = Each_Hosted_Zone_Distinction(route53_hosted_zone['Name'], route53_hosted_zone['Comment'])
+            route53_hosted_zone_distinction = EachHostedZoneDistinction(route53_hosted_zone['Name'], route53_hosted_zone['Comment'])
             if target_hosted_zone_distinctions != None and route53_hosted_zone_distinction not in target_hosted_zone_distinctions:
                 continue
             
@@ -41,7 +41,7 @@ class Route53_Hosted_Zones(Hosted_Zones):
             if route53_record['Type'] != 'A':
                 continue
             
-            route53_record_distinction = Each_Record_Distinction(route53_record['Name'])
+            route53_record_distinction = EachRecordDistinction(route53_record['Name'])
             if route53_record_distinction not in target_records_distinctions:
                 continue
             

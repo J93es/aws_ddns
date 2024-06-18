@@ -1,7 +1,7 @@
 import copy
 from record import Records
 
-class Each_Hosted_Zone_Distinction:
+class EachHostedZoneDistinction:
     name: str
     comment: str | None
     
@@ -22,31 +22,27 @@ class Each_Hosted_Zone_Distinction:
 
         
 
-class Each_Hosted_Zone:
+class EachHostedZone:
     id: str
     name: str
     comment: str | None
-    distinction: Each_Hosted_Zone_Distinction
+    distinction: EachHostedZoneDistinction
     records: Records
     
     def __init__(self, each_hosted_zone: dict) -> None:
-        if isinstance(each_hosted_zone, Each_Hosted_Zone):
+        if isinstance(each_hosted_zone, EachHostedZone):
             self.id = str(self.id).strip()
             self.name = str(self.name).strip()
             self.comment = str(self.comment).strip() if self.comment is not None else None
-            self.distinction = Each_Hosted_Zone_Distinction(self.name, self.comment)
+            self.distinction = EachHostedZoneDistinction(self.name, self.comment)
             self.records = Records(self.records)
             return 
             
         self.id = str(each_hosted_zone['Id']).strip()
         self.name = str(each_hosted_zone['Name']).strip()
         self.comment = str(each_hosted_zone['Comment']).strip() if each_hosted_zone['Comment'] is not None else None
-        self.distinction = Each_Hosted_Zone_Distinction(self.name, self.comment)
+        self.distinction = EachHostedZoneDistinction(self.name, self.comment)
         self.records = Records(each_hosted_zone['Records'])
-        
-    
-    def __eq__(self, value: object) -> bool:
-        return self.distinction == value.get_distinction()
     
     def to_dict(self) -> dict:
         return {
@@ -57,24 +53,24 @@ class Each_Hosted_Zone:
             'Records' : self.records.to_list(),
         }
         
-    def get_distinction(self) -> Each_Hosted_Zone_Distinction:
+    def get_distinction(self) -> EachHostedZoneDistinction:
         return copy.deepcopy(self.distinction)
     
     def get_records(self) -> Records:
         return copy.deepcopy(self.records)
         
         
-class Hosted_Zones:
+class HostedZones:
     hosted_zones: list
     
     def __init__(self, hosted_zones: list) -> None:
-        if isinstance(hosted_zones, Hosted_Zones):
+        if isinstance(hosted_zones, HostedZones):
             self.hosted_zones = hosted_zones.hosted_zones.to_list()
             return
         
         self.hosted_zones = []
         for each_hosted_zone in hosted_zones:
-            self.hosted_zones.append(Each_Hosted_Zone(each_hosted_zone))
+            self.hosted_zones.append(EachHostedZone(each_hosted_zone))
             
     def __iter__(self):
         return iter(self.hosted_zones)
@@ -91,7 +87,7 @@ class Hosted_Zones:
             distinctions.append(hosted_zone.get_distinction())
         return distinctions
     
-    def find_by_distinction(self, distinction: Each_Hosted_Zone_Distinction) -> Each_Hosted_Zone | None:
+    def find_by_distinction(self, distinction: EachHostedZoneDistinction) -> EachHostedZone | None:
         for hosted_zone in self.hosted_zones:
             if hosted_zone.distinction == distinction:
                 return hosted_zone

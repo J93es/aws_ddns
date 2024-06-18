@@ -1,11 +1,11 @@
-from schema.hosted_zone import Hosted_Zones
+from schema.hosted_zone import HostedZones
       
-class Target_Hosted_Zones(Hosted_Zones):
+class TargetHostedZones(HostedZones):
     hosted_zones: list
     
     def __init__(self, config_hosted_zones: list) -> None:
         hosted_zones = self.__init_filter_hosted_zones(config_hosted_zones)
-        self.hosted_zones = Hosted_Zones(hosted_zones)
+        self.hosted_zones = HostedZones(hosted_zones)
             
     def __init_filter_hosted_zones(self, config_hosted_zones: list) -> list:
         hosted_zones = []
