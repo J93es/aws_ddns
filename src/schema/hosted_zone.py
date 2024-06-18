@@ -11,7 +11,7 @@ class EachHostedZoneDistinction:
     
     def __eq__(self, other) -> bool:
         is_name_same = self.name == other.to_dict()['Name']
-        is_comment_same = self.comment == other.to_dict()['Comment'] or self.comment is None
+        is_comment_same = self.comment is None or self.comment == other.to_dict()['Comment']
         return is_name_same and is_comment_same
     
     def to_dict(self) -> dict:
